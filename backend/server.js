@@ -12,6 +12,7 @@ if( !process.env.NODE_ENV ) {
 }
 
 // Use built-in middleware
+
 app.use(cors());  // enable all CORS requests
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
