@@ -1,24 +1,36 @@
-import logo from './logo.svg';
-import './App.css';
+// File: App.js
+import React, { useState, useEffect } from "react";
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import "./App.css";
+
+function Message1() {
+  const [message, setMessage] = useState("");
+
+  useEffect(() => {
+    fetch("http://localhost:4000/message")
+      .then((res) => res.json())
+      .then((data) => setMessage(data.message));
+  }, []);
+
+  return <h1>{message}</h1>;
+}
+
+// function Message2() {
+//   const [message, setMessage] = useState("");
+
+//   // ... rest of your code
+// }
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <div className="App">
+        <Routes>
+          <Route path="/message1" element={<Message1 />} />
+  
+        </Routes>
+      </div>
+    </Router>
   );
 }
 
