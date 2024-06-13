@@ -30,7 +30,7 @@ const Login = () => {
       <div className="login-form">
         <div className="header-login">
           <label className="title-login">Login</label>
-          <p className="description-login">Create your account in no time and enjoy our best online courses for free.</p>
+          <p className="description-login">Masukkan email dan password Anda.</p>
         </div>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="input_container">
