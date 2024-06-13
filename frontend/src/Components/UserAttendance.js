@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import '../App.css';
 
 const UserAttendance = () => {
-  // Data contoh untuk tabel recap absensi
   const attendanceData = [
     {
       day: 'Monday',
@@ -21,13 +20,13 @@ const UserAttendance = () => {
       overtime: '1.5 hours',
       image: 'url/to/image2.jpg'
     },
-    // Tambahkan data absensi lainnya sesuai kebutuhan
+    // Add more attendance data as needed
   ];
 
   return (
     <div className="attendance-container">
-      <h2>Recap Absensi</h2>
-      <table>
+      <h2 className="attendance-heading">Recap Absensi</h2>
+      <br></br><table className="attendance-table">
         <thead>
           <tr>
             <th>Hari</th>
@@ -47,7 +46,7 @@ const UserAttendance = () => {
               <td>{attendance.timeOut}</td>
               <td>{attendance.overtime}</td>
               <td>
-                <Link to={`/user/attendance/${index}`}>
+                <Link to={`/user/attendance/${index}`} className="view-link">
                   Lihat Foto
                 </Link>
               </td>
