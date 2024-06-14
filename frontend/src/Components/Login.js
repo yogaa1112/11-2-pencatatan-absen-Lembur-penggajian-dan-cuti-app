@@ -2,7 +2,6 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { Form } from "react-bootstrap";
 import { useNavigate, Link } from "react-router-dom";
-import axios from "axios";
 import "../App.css";
 
 const Login = () => {
@@ -13,24 +12,19 @@ const Login = () => {
   } = useForm();
   const navigate = useNavigate();
 
-  const onSubmit = async (data) => {
-    try {
-      const response = await axios.post("http://localhost:3000/login", data);
-      const { token } = response.data;
+  const onSubmit = (data) => {
+    const { email, password } = data;
 
-      // Simpan token di localStorage atau sessionStorage
-      localStorage.setItem("token", token);
-
-      alert("Login berhasil, Anda akan diarahkan ke dashboard yang sesuai.");
-
-      // Navigasi berdasarkan peran pengguna
-      const decodedToken = JSON.parse(atob(token.split(".")[1]));
-      if (decodedToken.email === "admin@example.com") {
-        navigate("/admin/home");
-      } else {
-        navigate("/user/userhome");
-      }
-    } catch (error) {
+    // Simulasi pemeriksaan kredensial
+    if (email === "admin@example.com" && password === "adminpassword") {
+      console.log("Navigasi ke Dashboard Admin");
+      alert("Login berhasil sebagai Admin, akan navigasi ke Dashboard Admin");
+      navigate("/admin/home"); // Navigasi menggunakan useNavigate
+    } else if (email === "employee@example.com" && password === "employeepassword") {
+      console.log("Navigasi ke Dashboard Karyawan");
+      alert("Login berhasil sebagai Karyawan, akan navigasi ke Dashboard Karyawan");
+      navigate("/user/userhome"); // Navigasi menggunakan useNavigate
+    } else {
       alert("Email atau password salah. Silakan coba lagi.");
     }
   };
@@ -40,7 +34,7 @@ const Login = () => {
       <div className="login-form">
         <div className="header-login">
           <label className="title-login">Login</label>
-          <p className="description-login">Silahkan Masukan E-mail dan Password</p>
+          <p className="description-login">Create your account in no time and enjoy our best online courses for free.</p>
         </div>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="input_container">
