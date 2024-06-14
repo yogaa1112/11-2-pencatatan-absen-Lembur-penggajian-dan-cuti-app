@@ -11,6 +11,48 @@ const videoConstraints = {
 
 const AttendanceIn = () => {
   const webcamRef = useRef(null);
+<<<<<<< HEAD
+  const [currentTime, setCurrentTime] = useState(new Date());
+  const [capturedData, setCapturedData] = useState(null);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentTime(new Date());
+    }, 1000);
+    return () => clearInterval(timer);
+  }, []);
+
+  const capture = useCallback(() => {
+    const image = webcamRef.current.getScreenshot();
+    const timestamp = new Date();
+    const payload = {
+      image,
+      timestamp: timestamp.toISOString(),
+    };
+    setCapturedData(payload);
+    sendToBackend(payload);
+  }, [webcamRef]);
+
+  const sendToBackend = async (payload) => {
+    try {
+      const response = await fetch("http://your-backend-endpoint/api/attendance", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+      if (response.ok) {
+        console.log("Data sent successfully!");
+      } else {
+        console.error("Error sending data");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
+=======
 
   const capture = useCallback(() => {
     const imageSrc = webcamRef.current.getScreenshot();
