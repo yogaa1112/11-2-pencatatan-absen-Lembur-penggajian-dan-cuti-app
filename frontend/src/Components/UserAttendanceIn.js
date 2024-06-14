@@ -1,4 +1,4 @@
-import React, { useRef, useCallback } from "react";
+import React, { useRef, useCallback, useState, useEffect } from "react";
 import Webcam from "react-webcam";
 import { Button, Container, Row, Col } from "react-bootstrap";
 import "../App.css";
@@ -11,7 +11,6 @@ const videoConstraints = {
 
 const AttendanceIn = () => {
   const webcamRef = useRef(null);
-<<<<<<< HEAD
   const [currentTime, setCurrentTime] = useState(new Date());
   const [capturedData, setCapturedData] = useState(null);
 
@@ -52,14 +51,6 @@ const AttendanceIn = () => {
     }
   };
 
-=======
-
-  const capture = useCallback(() => {
-    const imageSrc = webcamRef.current.getScreenshot();
-    console.log(imageSrc);
-    // You can send the image to a server here or save it locally
-  }, [webcamRef]);
-
   return (
     <div className="main-content">
       <Container className="attendance-in">
@@ -68,10 +59,32 @@ const AttendanceIn = () => {
             <h2>Absensi Karyawan</h2>
             <h3>Masuk</h3>
             <br></br>
-            <Webcam audio={false} height={450} ref={webcamRef} screenshotFormat="image/jpeg" width={620} videoConstraints={videoConstraints} />
+            <Webcam
+              audio={false}
+              height={450}
+              ref={webcamRef}
+              screenshotFormat="image/jpeg"
+              width={620}
+              videoConstraints={videoConstraints}
+            />
+            <Row className="my-4">
+              <Col>
+                <div className="datetime-container">
+                  <p>{currentTime.toLocaleDateString()}</p>
+                  <p>{currentTime.toLocaleTimeString()}</p>
+                </div>
+              </Col>
+            </Row>
             <Button onClick={capture} className="picturein">
               Ambil Gambar
             </Button>
+            {capturedData && (
+              <div className="captured-image">
+                <h4>Gambar Terambil:</h4>
+                <img src={capturedData.image} alt="Captured" />
+                <p>Waktu Absen Masuk: {new Date(capturedData.timestamp).toLocaleString()}</p>
+              </div>
+            )}
           </Col>
         </Row>
       </Container>
