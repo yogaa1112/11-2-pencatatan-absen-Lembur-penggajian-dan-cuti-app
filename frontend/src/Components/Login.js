@@ -15,7 +15,7 @@ const Login = () => {
 
   const onSubmit = async (data) => {
     try {
-      const response = await axios.post("http://localhost:3000login", data);
+      const response = await axios.post("http://localhost:3000/login", data);
       const { token } = response.data;
 
       // Simpan token di localStorage atau sessionStorage

@@ -1,46 +1,48 @@
-import React from 'react';
+import React from "react";
 import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
-import Header from './Components/Header';
-import './App.css';
-import Footer from './Components/Footer';
-import Contact from './Components/Contact';
-import About from './Components/About';
-import Home from './Components/Home';
-import Admin from './Admin';
-import Login from './Components/Login';
-import ForgotPassword from './Components/ForgotPassword';
-import Employees from './Components/Employees';
-import EmployeePersonal from './Components/EmployeePersonal';
-import EmployeeStaff from './Components/EmployeeStaff';
-import EmployeePayroll from './Components/EmployeePayroll';
-import AddSalary from './Components/AddSalary';
-import Leave from './Components/Leave';
-import User from './User';
-import Logout from './Components/Logout';
-import UserAttendance from './Components/UserAttendance';
-import UserSalary from './Components/UserSalary';
-import UserAttendanceIn from './Components/UserAttendanceIn';
-import AttendanceOut from './Components/AttendanceOut';
-import ProtectedRoute from './Components/ProtectedRoute';
+import Header from "./Components/Header";
+import "./App.css";
+import Footer from "./Components/Footer";
+import Contact from "./Components/Contact";
+import About from "./Components/About";
+import Home from "./Components/Home";
+import Admin from "./Admin";
+import Login from "./Components/Login";
+import ForgotPassword from "./Components/ForgotPassword";
+import Employees from "./Components/Employees";
+import EmployeePersonal from "./Components/EmployeePersonal";
+import EmployeeStaff from "./Components/EmployeeStaff";
+import EmployeePayroll from "./Components/EmployeePayroll";
+import AddSalary from "./Components/AddSalary";
+import Leave from "./Components/Leave";
+import User from "./User";
+import Logout from "./Components/Logout";
+import UserAttendance from "./Components/UserAttendance";
+import UserSalary from "./Components/UserSalary";
+import UserAttendanceIn from "./Components/UserAttendanceIn";
+import AttendanceOut from "./Components/AttendanceOut";
 
 function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={
-          <>
-            <Header />
-            <Home />
-            <About />
-            <Contact />
-            <Footer />
-          </>
-        } />
+        <Route
+          path="/"
+          element={
+            <>
+              <Header />
+              <Home />
+              <About />
+              <Contact />
+              <Footer />
+            </>
+          }
+        />
 
         <Route path="/login" element={<Login />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
 
-        <Route path="/admin/*" element={<ProtectedRoute component={Admin} />}>
+        <Route path="/admin/*" element={<Admin />}>
           <Route path="home" element={<Admin />} />
           <Route path="employees" element={<Employees />} />
           <Route path="add-employee" element={<EmployeePersonal />} />
@@ -49,7 +51,7 @@ function App() {
           <Route path="add-salary" element={<AddSalary />} />
         </Route>
 
-        <Route path="/user/*" element={<ProtectedRoute component={User} />}>
+        <Route path="/user/*" element={<User />}>
           <Route path="userhome" element={<User />} />
           <Route path="userattendance" element={<UserAttendance />} />
           <Route path="usersalary" element={<UserSalary />} />
