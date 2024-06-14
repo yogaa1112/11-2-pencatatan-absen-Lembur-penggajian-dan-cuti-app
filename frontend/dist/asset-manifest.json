@@ -1,0 +1,27 @@
+{
+  "files": {
+    "main.css": "/static/css/main.9aa4cd51.css",
+    "main.js": "/static/js/main.a82b7b94.js",
+    "static/js/453.6f4f0bfc.chunk.js": "/static/js/453.6f4f0bfc.chunk.js",
+    "static/media/salary-hover.svg": "/static/media/salary-hover.42f8a364abdf9ceebca26b02aaffa96b.svg",
+    "static/media/salary.svg": "/static/media/salary.8323725de3526a8a7f4a80fcd00b2e1d.svg",
+    "static/media/logout-hover.svg": "/static/media/logout-hover.2c1bad9be43bc5fd917520cacbb2dac7.svg",
+    "static/media/logout.svg": "/static/media/logout.6c025bde3795f77177722ccbd81fd867.svg",
+    "static/media/employees-hover.svg": "/static/media/employees-hover.737cb9936896d553348faa6d74c7a0f2.svg",
+    "static/media/employees.svg": "/static/media/employees.079fe3b62f671e18f4eea0b75bf31665.svg",
+    "static/media/attendance-hover.svg": "/static/media/attendance-hover.389e9f905b38f6c6624f43c16af0c834.svg",
+    "static/media/attendance.svg": "/static/media/attendance.9a94ef5491b49e97f0e7b01a3cff33da.svg",
+    "static/media/Group 6.svg": "/static/media/Group 6.151e44521e56de3f656af25fafad12af.svg",
+    "static/media/home-hover.svg": "/static/media/home-hover.cabd623ceb005d54a8ccd57481df5fc8.svg",
+    "static/media/home.svg": "/static/media/home.729c384bff0329a99976489ac9cf7fd4.svg",
+    "index.html": "/index.html",
+    "static/media/Group 7.svg": "/static/media/Group 7.92d401a1d91da4aeb839c56958147dd3.svg",
+    "main.9aa4cd51.css.map": "/static/css/main.9aa4cd51.css.map",
+    "main.a82b7b94.js.map": "/static/js/main.a82b7b94.js.map",
+    "453.6f4f0bfc.chunk.js.map": "/static/js/453.6f4f0bfc.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.9aa4cd51.css",
+    "static/js/main.a82b7b94.js"
+  ]
+}
