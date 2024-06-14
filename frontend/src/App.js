@@ -21,46 +21,47 @@ import UserAttendance from './Components/UserAttendance';
 import UserSalary from './Components/UserSalary';
 import UserAttendanceIn from './Components/UserAttendanceIn';
 import AttendanceOut from './Components/AttendanceOut';
+import ProtectedRoute from './Components/ProtectedRoute';
 
 function App() {
   return (
-      <Router>
-        <Routes>
-          <Route path="/" element={
-            <>
-              <Header />
-              <Home />
-              <About />
-              <Contact />
-              <Footer />
-            </>
-          } />
-          
-          <Route path="/login" element={<Login />} />
-          <Route path="/forgot-password" element={<ForgotPassword />} />
-          
-          <Route path="/admin/*" element={< Admin />}>
-            <Route path="home" element={<Admin />} />
-            <Route path="employees" element={<Employees />} />
-            <Route path="add-employee" element={<EmployeePersonal/>} />
-            <Route path="employee-staff" element={<EmployeeStaff />} />
-            <Route path="employee-payroll" element={<EmployeePayroll />} />
-            <Route path="add-salary" element={<AddSalary />} />
-          </Route>
-          
-          <Route path="/user/*" element={< User />}>
-            <Route path="userhome" element={<User />} />
-            <Route path="userattendance" element={<UserAttendance />} />
-            <Route path="usersalary" element={<UserSalary />} />
-            <Route path="userleave" element={<Leave />} />
-            <Route path="userattendancein" element={<UserAttendanceIn />} />
-            <Route path="attendanceout" element={<AttendanceOut />} />
-            <Route path="logout" element={<Logout />} />
-          </Route>
+    <Router>
+      <Routes>
+        <Route path="/" element={
+          <>
+            <Header />
+            <Home />
+            <About />
+            <Contact />
+            <Footer />
+          </>
+        } />
 
-          <Route path="*" element={<Navigate to="/" />} />
-        </Routes>
-      </Router>
+        <Route path="/login" element={<Login />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+
+        <Route path="/admin/*" element={<ProtectedRoute component={Admin} />}>
+          <Route path="home" element={<Admin />} />
+          <Route path="employees" element={<Employees />} />
+          <Route path="add-employee" element={<EmployeePersonal />} />
+          <Route path="employee-staff" element={<EmployeeStaff />} />
+          <Route path="employee-payroll" element={<EmployeePayroll />} />
+          <Route path="add-salary" element={<AddSalary />} />
+        </Route>
+
+        <Route path="/user/*" element={<ProtectedRoute component={User} />}>
+          <Route path="userhome" element={<User />} />
+          <Route path="userattendance" element={<UserAttendance />} />
+          <Route path="usersalary" element={<UserSalary />} />
+          <Route path="userleave" element={<Leave />} />
+          <Route path="userattendancein" element={<UserAttendanceIn />} />
+          <Route path="attendanceout" element={<AttendanceOut />} />
+          <Route path="logout" element={<Logout />} />
+        </Route>
+
+        <Route path="*" element={<Navigate to="/" />} />
+      </Routes>
+    </Router>
   );
 }
 
