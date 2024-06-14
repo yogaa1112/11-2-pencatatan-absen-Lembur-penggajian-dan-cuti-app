@@ -15,7 +15,6 @@ const videoConstraints = {
 
 const AttendanceIn = () => {
   const webcamRef = useRef(null);
-<<<<<<< HEAD
   const [currentTime, setCurrentTime] = useState(new Date());
   const [capturedData, setCapturedData] = useState(null);
 
@@ -56,7 +55,6 @@ const AttendanceIn = () => {
     }
   };
 
-=======
 
   const capture = useCallback(() => {
     const imageSrc = webcamRef.current.getScreenshot();
@@ -64,7 +62,6 @@ const AttendanceIn = () => {
     // You can send the image to a server here or save it locally
   }, [webcamRef]);
 
->>>>>>> abf3b6cb59471ce5b92d9cf7530b76821dd3c29e
   return (
     <div className="main-content">
       <Container className="attendance-in">
