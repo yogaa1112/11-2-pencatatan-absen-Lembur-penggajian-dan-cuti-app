@@ -26,7 +26,7 @@ const UserAttendance = () => {
   return (
     <div className="attendance-container">
       <h2 className="attendance-heading">Recap Absensi</h2>
-      <br></br><table className="attendance-table">
+      <table className="attendance-table">
         <thead>
           <tr>
             <th>Hari</th>
