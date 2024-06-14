@@ -1,27 +1,37 @@
-import React from 'react';
-import { useForm } from 'react-hook-form';
+import React from "react";
+import { useForm } from "react-hook-form";
 import { Form } from "react-bootstrap";
-import { useNavigate, Link } from 'react-router-dom';
-import '../App.css';
+import { useNavigate, Link } from "react-router-dom";
+import axios from "axios";
+import "../App.css";
 
 const Login = () => {
-  const { register, handleSubmit, formState: { errors } } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
   const navigate = useNavigate();
 
-  const onSubmit = data => {
-    const { email, password } = data;
+  const onSubmit = async (data) => {
+    try {
+      const response = await axios.post("http://localhost:3000login", data);
+      const { token } = response.data;
 
-    // Simulasi pemeriksaan kredensial
-    if (email === 'admin@example.com' && password === 'adminpassword') {
-      console.log('Navigasi ke Dashboard Admin');
-      alert('Login berhasil sebagai Admin, akan navigasi ke Dashboard Admin');
-      navigate('/admin/home'); // Navigasi menggunakan useNavigate
-    } else if (email === 'employee@example.com' && password === 'employeepassword') {
-      console.log('Navigasi ke Dashboard Karyawan');
-      alert('Login berhasil sebagai Karyawan, akan navigasi ke Dashboard Karyawan');
-      navigate('/user/userhome'); // Navigasi menggunakan useNavigate
-    } else {
-      alert('Email atau password salah. Silakan coba lagi.');
+      // Simpan token di localStorage atau sessionStorage
+      localStorage.setItem("token", token);
+
+      alert("Login berhasil, Anda akan diarahkan ke dashboard yang sesuai.");
+
+      // Navigasi berdasarkan peran pengguna
+      const decodedToken = JSON.parse(atob(token.split(".")[1]));
+      if (decodedToken.email === "admin@example.com") {
+        navigate("/admin/home");
+      } else {
+        navigate("/user/userhome");
+      }
+    } catch (error) {
+      alert("Email atau password salah. Silakan coba lagi.");
     }
   };
 
@@ -30,18 +40,18 @@ const Login = () => {
       <div className="login-form">
         <div className="header-login">
           <label className="title-login">Login</label>
-          <p className="description-login">Masukkan email dan password Anda.</p>
+          <p className="description-login">Silahkan Masukan E-mail dan Password</p>
         </div>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="input_container">
             <Form.Label>Email</Form.Label>
-            <input id="email_field" className="input_field" type="text" {...register('email', { required: true })} placeholder="name@mail.com" />
+            <input id="email_field" className="input_field" type="text" {...register("email", { required: true })} placeholder="name@mail.com" />
             {errors.email && <p className="error-message">Email harus diisi.</p>}
           </div>
           <br />
           <div className="input_container">
             <Form.Label>Password</Form.Label>
-            <input id="password_field" className="input_field" type="password" {...register('password', { required: true })} placeholder="Password" />
+            <input id="password_field" className="input_field" type="password" {...register("password", { required: true })} placeholder="Password" />
             {errors.password && <p className="error-message">Password harus diisi.</p>}
           </div>
           <br />
