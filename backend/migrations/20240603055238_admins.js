@@ -3,15 +3,16 @@
  * @returns { Promise<void> }
  */
 exports.up = async function(knex) {
-    await knex.schema.createTable('admin', function (table) {
-        table.bigInteger('admin_id').primary().index();
+    await knex.schema.createTable('admins', function (table) {
+        table.bigIncrements('admin_id').primary().index();
         table.string('name')
-        table.string('photo_url')
+        table.string('photo_url').nullable()
         table.string('position')
         table.string('email').unique()
         table.string('password')
-        table.string('waphone')
-        table.string('created_at')
+        table.string('waphone').notNullable()
+
+        table.dateTime('created_at').defaultTo(knex.fn.now())
       })
 };
 
@@ -20,5 +21,5 @@ exports.up = async function(knex) {
  * @returns { Promise<void> }
  */
 exports.down = async function(knex) {
-    await knex.schema.dropTable('admin')
+    await knex.schema.dropTable('admins')
 };

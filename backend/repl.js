@@ -1,3 +1,9 @@
 const db = require("./services/db")
 
-console.log(db)
+async function repl() {
+    console.log(
+        await db('admins').select()
+    )
+}
+
+repl()
