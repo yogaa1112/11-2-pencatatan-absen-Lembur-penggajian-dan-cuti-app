@@ -29,7 +29,7 @@ module.exports = {
             jwt.sign(
                 payload,
                 'prjsecret11x', 
-                { expiresIn: '1h' },
+                { expiresIn: '12h' },
                 (err, token) => {
                 if (err) throw err;
                  res.json({ token });
