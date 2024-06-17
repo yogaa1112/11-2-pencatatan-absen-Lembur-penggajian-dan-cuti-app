@@ -1,5 +1,6 @@
 const db = require('../services/db')
 const bcrypt = require('bcryptjs');
+const { json } = require('express');
 const jwt = require('jsonwebtoken');
 
 module.exports = {
@@ -40,4 +41,21 @@ module.exports = {
         }
 
       },
+
+    validate: async (req, res) => {
+        const { token } = req.body;
+        if (!token) {
+            return res.json({ message: 'No token' });
+        }
+
+        try {
+            let verif = jwt.verify(token, process.env.JWT_SECRET);
+            if (!verif) {
+                return res.json({ message: 'Invalid token' });
+            }
+            return res.json({ message: 'Valid token' });
+        } catch (err) {
+            return res.json({ message: 'Invalid token', error: err });
+        }
+    }
 }

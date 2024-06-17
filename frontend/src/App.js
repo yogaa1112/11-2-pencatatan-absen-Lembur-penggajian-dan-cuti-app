@@ -22,6 +22,9 @@ import UserSalary from "./Components/UserSalary";
 import UserAttendanceIn from "./Components/UserAttendanceIn";
 import AttendanceOut from "./Components/AttendanceOut";
 
+
+import ProtectedRoute from "./Components/ProtectedRoute";
+
 function App() {
   return (
     <Router>
@@ -42,7 +45,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
 
-        <Route path="/admin/*" element={<Admin />}>
+        <Route path="/admin/*" element={<> <ProtectedRoute /> <Admin/> </>}>
           <Route path="home" element={<Admin />} />
           <Route path="employees" element={<Employees />} />
           <Route path="add-employee" element={<EmployeePersonal />} />
@@ -51,7 +54,9 @@ function App() {
           <Route path="add-salary" element={<AddSalary />} />
         </Route>
 
-        <Route path="/user/*" element={<User />}>
+        
+
+        <Route path="/user/*" element={<> <ProtectedRoute /> <User/> </>}>
           <Route path="userhome" element={<User />} />
           <Route path="userattendance" element={<UserAttendance />} />
           <Route path="usersalary" element={<UserSalary />} />
