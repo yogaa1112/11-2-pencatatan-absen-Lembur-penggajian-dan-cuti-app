@@ -30,13 +30,17 @@ function Header() {
             <Nav.Link href="#contact">Kontak</Nav.Link>
           </Nav>
           <Nav className="ml-auto">
-            <Link to="/login">
-              <Button variant="outline-primary">Login</Button>
-            </Link>
-            <Link to="/admin/home">
-              <Button variant="primary">
-                <span>Dashboard</span></Button>
-            </Link>
+            {localStorage.getItem('token') ? (
+              <Link to="/admin/home">
+                <Button variant="primary">
+                  <span>Dashboard</span>
+                </Button>
+              </Link>
+            ) : (
+              <Link to="/login">
+                <Button variant="outline-primary">Login</Button>
+              </Link>
+            )}
           </Nav>
         </Navbar.Collapse>
       </div>
