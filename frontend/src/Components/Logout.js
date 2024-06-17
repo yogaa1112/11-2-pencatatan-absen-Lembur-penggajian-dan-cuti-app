@@ -6,8 +6,7 @@ function Logout() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Logika untuk logout dapat ditambahkan di sini, seperti membersihkan sesi
-    // Setelah logout, arahkan pengguna ke halaman utama
+    localStorage.removeItem('token');
     navigate('/');
   }, [navigate]);
 
