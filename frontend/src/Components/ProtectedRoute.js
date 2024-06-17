@@ -1,25 +1,31 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
 import axios from 'axios';
 let api = process.env.REACT_APP_REMOTE_URL
 
 const ProtectedRoute = () => {
+    const [shouldNavigate, setShouldNavigate] = useState(false);
 
     useEffect(() => {
         const token = localStorage.getItem('token');
-        if (!token) {
-            return <Navigate to="/login" />
-            return;
-        }
 
         axios.post(`${api}/login/validate`, { token })
             .then((response) => {
-                return <Outlet /> ;
+                if (response.data.message !== 'Valid token') {
+                    localStorage.removeItem('token');
+                    setShouldNavigate(true);
+                }
             })
             .catch((error) => {
-                return <Navigate to="/login" />
+                setShouldNavigate(true);
             });
     }, []);
+
+    if (shouldNavigate) {
+        return <Navigate to="/login" />
+    }
+
+    return <Outlet />;
 }
 
 export default ProtectedRoute;

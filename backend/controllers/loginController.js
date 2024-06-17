@@ -49,7 +49,7 @@ module.exports = {
         }
 
         try {
-            let verif = jwt.verify(token, process.env.JWT_SECRET);
+            let verif = jwt.verify(token, 'prjsecret11x');
             if (!verif) {
                 return res.json({ message: 'Invalid token' });
             }
