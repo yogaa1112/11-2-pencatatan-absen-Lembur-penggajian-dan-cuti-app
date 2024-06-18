@@ -2,19 +2,28 @@ import React, { useState, useEffect } from "react";
 import "../App.css";
 import { Table } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import useCurrentUser from "./Services/useCurrentUser";
 import axios from "axios"
 
 const Employees = () => {
   const [employeesList, setEmployeesList] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const {user} = useCurrentUser();
 
   useEffect(() => {
     const fetchEmployees = async () => {
+      if (!user) {
+        return;
+      }
+
       try {
-        axios.get(`${process.env.REACT_APP_REMOTE_URL}/employee/list`).then((resp) => {
-          setEmployeesList(resp.data);
-        })
+        const response = await axios.post(`${process.env.REACT_APP_REMOTE_URL}/employee/list`, { user });
+        if (response.data) {
+          setEmployeesList(response.data);
+        } else {
+          setEmployeesList([]);
+        }
       } catch (error) {
         setError(error);
       } finally {
@@ -23,7 +32,7 @@ const Employees = () => {
     };
 
     fetchEmployees();
-  }, []);
+  }, [user]);
 
   const handleDelete = (index) => {
     const updatedList = employeesList.filter((_, i) => i !== index);
