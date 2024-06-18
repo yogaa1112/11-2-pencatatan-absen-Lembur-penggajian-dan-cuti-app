@@ -66,7 +66,7 @@ const LeaveApplication = () => {
             <br></br>
             <Link to="/user/userleave">
               <Button variant="primary" className="submit-btn">
-                Selanjutnya
+                Kirim
               </Button>
             </Link>
           </Form>
