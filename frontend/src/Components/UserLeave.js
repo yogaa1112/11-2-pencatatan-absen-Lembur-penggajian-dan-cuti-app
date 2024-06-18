@@ -1,13 +1,19 @@
+import { useState } from "react";
 import { Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import React from "react";
 
 const UserLeave = () => {
-  const data = [
+  const [data, setData] = useState([
     { id: 1, name: "M Ichsan Dedi", position: "Karyawan", startDate: "", endDate: "", notes: "" },
     { id: 2, name: "M Ahya Fajri F", position: "Karyawan", startDate: "", endDate: "", notes: "" },
     { id: 3, name: "M Ahya Fajri F", position: "Karyawan", startDate: "", endDate: "", notes: "" },
-  ];
+  ]);
+
+  const handleDelete = (id) => {
+    const updatedData = data.filter(item => item.id !== id);
+    setData(updatedData);
+  };
 
   return (
     <div className="main-content">
@@ -19,7 +25,7 @@ const UserLeave = () => {
         </Link>
       </div>
       <table className="leave-table">
-        <thead>
+      <thead>
           <tr>
             <th>No</th>
             <th>Nama</th>
@@ -40,7 +46,7 @@ const UserLeave = () => {
               <td>{item.endDate}</td>
               <td>{item.notes}</td>
               <td>
-                <button className="delete-btn">🗑️</button>
+                <button className="delete-button" onClick={() => handleDelete(item.id)}>🗑️</button>
               </td>
             </tr>
           ))}

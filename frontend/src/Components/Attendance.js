@@ -3,8 +3,37 @@ import { Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 const Attendance = () => {
-  // State untuk menyimpan tanggal saat ini
+  // State untuk menyimpan tanggal saat ini dan data presensi
   const [currentDate, setCurrentDate] = useState(new Date());
+  const [attendanceData, setAttendanceData] = useState([
+    {
+      id: 1,
+      name: "M Ichsan Dedi",
+      position: "Karyawan",
+      date: "23 Mei 2024",
+      startTime: "08.00",
+      endTime: "16.00",
+      overtime: "Tidak"
+    },
+    {
+      id: 2,
+      name: "M Ahya Fajri F",
+      position: "Karyawan",
+      date: "23 Mei 2024",
+      startTime: "08.00",
+      endTime: "18.00",
+      overtime: "2 Jam"
+    },
+    {
+      id: 3,
+      name: "M Ahya Fajri F",
+      position: "Karyawan",
+      date: "23 Mei 2024",
+      startTime: "08.00",
+      endTime: "16.00",
+      overtime: "Tidak"
+    }
+  ]);
 
   // Fungsi untuk menambah hari
   const handleNextDay = () => {
@@ -20,6 +49,11 @@ const Attendance = () => {
   const formatDate = (date) => {
     const options = { weekday: "long", year: "numeric", month: "long", day: "numeric" };
     return date.toLocaleDateString("id-ID", options);
+  };
+
+  // Fungsi untuk menghapus entri presensi berdasarkan id
+  const handleDeleteEntry = (id) => {
+    setAttendanceData(attendanceData.filter(entry => entry.id !== id));
   };
 
   return (
@@ -69,51 +103,23 @@ const Attendance = () => {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>1.</td>
-            <td>M Ichsan Dedi</td>
-            <td>Karyawan</td>
-            <td>23 Mei 2024</td>
-            <td>08.00</td>
-            <td>16.00</td>
-            <td>Tidak</td>
-            <td>
-              <button className="view-button">📄</button>
-            </td>
-            <td>
-              <button className="delete-button">🗑️</button>
-            </td>
-          </tr>
-          <tr>
-            <td>2.</td>
-            <td>M Ahya Fajri F</td>
-            <td>Karyawan</td>
-            <td>23 Mei 2024</td>
-            <td>08.00</td>
-            <td>18.00</td>
-            <td>2 Jam</td>
-            <td>
-              <button className="view-button">📄</button>
-            </td>
-            <td>
-              <button className="delete-button">🗑️</button>
-            </td>
-          </tr>
-          <tr>
-            <td>3.</td>
-            <td>M Ahya Fajri F</td>
-            <td>Karyawan</td>
-            <td>23 Mei 2024</td>
-            <td>08.00</td>
-            <td>16.00</td>
-            <td>Tidak</td>
-            <td>
-              <button className="view-button">📄</button>
-            </td>
-            <td>
-              <button className="delete-button">🗑️</button>
-            </td>
-          </tr>
+          {attendanceData.map((entry, index) => (
+            <tr key={index}>
+              <td>{index + 1}</td>
+              <td>{entry.name}</td>
+              <td>{entry.position}</td>
+              <td>{entry.date}</td>
+              <td>{entry.startTime}</td>
+              <td>{entry.endTime}</td>
+              <td>{entry.overtime}</td>
+              <td>
+                <button className="view-button">📄</button>
+              </td>
+              <td>
+                <button className="delete-button" onClick={() => handleDeleteEntry(entry.id)}>🗑️</button>
+              </td>
+            </tr>
+          ))}
         </tbody>
       </table>
     </div>
