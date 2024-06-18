@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import '../App.css';
 import { Table } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
 const Employees = () => {
-  const [employeesList, setEmployeesList] = useState([
+  const employeesList = [
     {
       no: 1,
       name: 'M Ichsan Dedi',
@@ -32,12 +32,7 @@ const Employees = () => {
       religion: 'Islam',
       education: 'S2'
     }
-  ]);
-
-  const handleDelete = (index) => {
-    const updatedList = employeesList.filter((_, i) => i !== index);
-    setEmployeesList(updatedList);
-  };
+  ];
 
   return (
     <div className="main-content">
@@ -72,7 +67,7 @@ const Employees = () => {
                 <td>{employee.religion}</td>
                 <td>{employee.education}</td>
                 <td>
-                  <button className="delete-button" onClick={() => handleDelete(index)}>🗑️</button>
+                  <button className="delete-button">🗑️</button>
                 </td>
               </tr>
             ))}
