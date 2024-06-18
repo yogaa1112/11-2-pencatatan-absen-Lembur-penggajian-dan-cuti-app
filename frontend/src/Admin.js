@@ -9,7 +9,6 @@ import Leave from './Components/Leave';
 import Salary from './Components/Salary';
 import Logout from './Components/Logout';
 import EmployeeStaff from './Components/EmployeeStaff';
-import EmployeePayroll from './Components/EmployeePayroll';
 import AddSalary from './Components/AddSalary';
 
 function Admin() {
@@ -21,7 +20,6 @@ function Admin() {
           <Route path="employees" element={<Employees />} />
           <Route path="add-employee" element={<EmployeePersonal />} />
           <Route path="employee-staff" element={<EmployeeStaff />} />
-          <Route path="employee-payroll" element={<EmployeePayroll />} />
           <Route path="attendance" element={<Attendance />} />
           <Route path="leave" element={<Leave />} />
           <Route path="salary" element={<Salary />} />

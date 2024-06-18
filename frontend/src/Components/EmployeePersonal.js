@@ -1,225 +1,370 @@
-import React from "react";
-import { Form, Button, Row, Col } from "react-bootstrap";
-import Sidebar from "./Sidebar";
-import "../App.css";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { Form, Col, Button, Row } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
+import Sidebar from './Sidebar';
+import useCurrentUser from './Services/useCurrentUser'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+import '../App.css';
+
 
 const EmployeePersonal = () => {
+  const { user, loading, error } = useCurrentUser();
+  const [formData, setFormData] = useState({
+    admin_id: '',
+    full_name: '',
+    nik: '',
+    gender: '',
+    religion: '',
+    birth_place: '',
+    birth_date: '',
+    email: '',
+    password: '',
+    address: '',
+    wa_phone: '',
+    education_level: '',
+    instituition_name: '',
+    study_program: '',
+    confirm_pw: '',
+  });
+
+  const [showPassword, setShowPassword] = useState(false);
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (user) {
+      setFormData((prevData) => ({
+        ...prevData,
+        admin_id: user.admin_id,
+      }));
+    }
+  }, [user]);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault(); // Prevent the default form submission behavior
+
+    // Trim whitespace from password fields
+    const trimmedPassword = formData.password.trim();
+    const trimmedConfirmPw = formData.confirm_pw.trim();
+
+    if (trimmedPassword !== trimmedConfirmPw) {
+      alert('Confirm password does not match with password');
+      return;
+    }
+
+    try {
+      const dataToSubmit = { ...formData, password: trimmedPassword };
+      delete dataToSubmit.confirm_pw;
+
+      await axios.post(`${process.env.REACT_APP_REMOTE_URL}/employee/add/personal`, dataToSubmit)
+      .then(res => {
+        if (res.data.message == 'error') {
+          alert('Failed to add employee data, Server is down');
+          return;
+        }
+        localStorage.setItem('employee_id', res.data.id);
+        navigate('/admin/employee-staff');
+      });
+    } catch (e) {
+      alert('Failed to add employee data, Server is down');
+      return;
+    }
+  };
+
+  const togglePasswordVisibility = () => {
+    setShowPassword((prevShowPassword) => !prevShowPassword);
+  };
+
   return (
     <div className="dashboard">
       <Sidebar />
       <div className="main-content-admin">
         <div className="form-container">
-          <h2>Masukkan Data Karyawan</h2>
-          <br></br>
-          <h3>Informasi Pribadi</h3>
-          <br></br>
-          <Form>
+          <h2>Enter Employee Data</h2>
+          <br />
+          <h3>Personal Information</h3>
+          <br />
+          <Form onSubmit={handleSubmit}>
             <Row>
               <Col md={12}>
-                <Form.Group controlId="formNamaLengkap">
+                <Form.Group controlId="formfull_name">
                   <Form.Label>
-                    Nama Lengkap <span className="required-asterisk">*</span>
+                    Full Name <span className="required-asterisk">*</span>
                   </Form.Label>
-                  <Form.Control type="text" placeholder="Nama Lengkap" />
+                  <Form.Control
+                    type="text"
+                    placeholder="Full Name"
+                    name="full_name"
+                    value={formData.full_name}
+                    onChange={handleChange}
+                    required
+                  />
                 </Form.Group>
               </Col>
             </Row>
-            <br></br>
+            <br />
             <Row>
               <Col md={6}>
                 <Form.Group controlId="formNIK">
                   <Form.Label>
                     NIK <span className="required-asterisk">*</span>
                   </Form.Label>
-                  <Form.Control type="text" placeholder="NIK" />
+                  <Form.Control
+                    type="text"
+                    placeholder="NIK"
+                    name="nik"
+                    value={formData.nik}
+                    onChange={handleChange}
+                    required
+                  />
                 </Form.Group>
               </Col>
-              <br></br>
+              <br />
               <Col md={6}>
-                <Form.Group controlId="formJenisKelamin">
+                <Form.Group controlId="formGender">
                   <Form.Label>
-                    Jenis Kelamin <span className="required-asterisk">*</span>
+                    Gender <span className="required-asterisk">*</span>
                   </Form.Label>
-                  <Form.Control type="text" placeholder="Jenis Kelamin" />
+                  <Form.Control
+                    as="select"
+                    name="gender"
+                    value={formData.gender}
+                    onChange={handleChange}
+                    required
+                  >
+                    <option value="">Select Gender</option>
+                    <option value="female">Female</option>
+                    <option value="male">Male</option>
+                  </Form.Control>
                 </Form.Group>
               </Col>
-              <br></br>
+              <br />
             </Row>
-            <br></br>
+            <br />
             <Row>
               <Col md={6}>
-                <Form.Group controlId="formAgama">
+                <Form.Group controlId="formReligion">
                   <Form.Label>
-                    Agama <span className="required-asterisk">*</span>
+                    Religion <span className="required-asterisk">*</span>
                   </Form.Label>
-                  <Form.Control type="text" placeholder="Agama" />
+                  <Form.Control
+                    type="text"
+                    placeholder="Religion"
+                    name="religion"
+                    value={formData.religion}
+                    onChange={handleChange}
+                    required
+                  />
                 </Form.Group>
               </Col>
-              <br></br>
+              <br />
               <Col md={6}>
-                <Form.Group controlId="formPendidikan">
+                <Form.Group controlId="formbirth_place">
                   <Form.Label>
-                    Golongan Darah <span className="required-asterisk">*</span>
+                    Birth Place <span className="required-asterisk">*</span>
                   </Form.Label>
-                  <Form.Control type="text" placeholder="Indonesia" />
+                  <Form.Control
+                    type="text"
+                    placeholder="Birth Place"
+                    name="birth_place"
+                    value={formData.birth_place}
+                    onChange={handleChange}
+                    required
+                  />
                 </Form.Group>
               </Col>
-              <br></br>
+              <br />
             </Row>
-            <br></br>
+            <br />
             <Row>
               <Col md={6}>
-                <Form.Group controlId="formTempatLahir">
+                <Form.Group controlId="formbirth_date">
                   <Form.Label>
-                    Tempat Lahir <span className="required-asterisk">*</span>
+                    Birth Date <span className="required-asterisk">*</span>
                   </Form.Label>
-                  <Form.Control type="text" placeholder="Tempat Lahir" />
+                  <Form.Control
+                    type="date"
+                    placeholder="Birth Date"
+                    name="birth_date"
+                    value={formData.birth_date}
+                    onChange={handleChange}
+                    required
+                  />
                 </Form.Group>
               </Col>
-              <br></br>
-              <Col md={6}>
-                <Form.Group controlId="formTanggalLahir">
-                  <Form.Label>
-                    Tanggal Lahir <span className="required-asterisk">*</span>
-                  </Form.Label>
-                  <Form.Control type="text" placeholder="Tanggal Lahir" />
-                </Form.Group>
-              </Col>
-              <br></br>
+              <br />
             </Row>
-            <br></br>
-
-            <br></br>
-            <h3>Informasi Kontak</h3>
-            <br></br>
+            <br /> <br />
+            <h3>Contact Information</h3>
+            <br />
             <Row>
               <Col md={6}>
                 <Form.Group controlId="formEmail">
                   <Form.Label>
                     Email <span className="required-asterisk">*</span>
                   </Form.Label>
-                  <Form.Control type="email" placeholder="Email" />
+                  <Form.Control
+                    type="email"
+                    placeholder="Email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    required
+                  />
                 </Form.Group>
               </Col>
-              <br></br>
+              <br />
               <Col md={6}>
-                <Form.Group controlId="formNoTelp">
+                <Form.Group controlId="formwa_phone">
                   <Form.Label>
-                    No Whatsapp <span className="required-asterisk">*</span>
+                    Phone Number <span className="required-asterisk">*</span>
                   </Form.Label>
-                  <Form.Control type="text" placeholder="No TLP/HP" />
+                  <Form.Control
+                    type="text"
+                    placeholder="Phone Number"
+                    name="wa_phone"
+                    value={formData.wa_phone}
+                    onChange={handleChange}
+                    required
+                  />
                 </Form.Group>
               </Col>
-              <br></br>
+              <br />
             </Row>
-            <br></br>
+            <br />
             <Row>
               <Col md={12}>
-                <Form.Group controlId="formAlamatKTP">
+                <Form.Group controlId="formAddress">
                   <Form.Label>
-                    Alamat KTP <span className="required-asterisk">*</span>
+                    Address <span className="required-asterisk">*</span>
                   </Form.Label>
-                  <Form.Control as="textarea" rows={3} placeholder="Alamat KTP" />
+                  <Form.Control
+                    as="textarea"
+                    rows={3}
+                    placeholder="Address"
+                    name="address"
+                    value={formData.address}
+                    onChange={handleChange}
+                    required
+                  />
                 </Form.Group>
               </Col>
-              <br></br>
+              <br />
             </Row>
-            <br></br>
-            <Row>
-              <Col md={12}>
-                <Form.Group controlId="formNegara">
-                  <Form.Label>
-                    Negara <span className="required-asterisk">*</span>
-                  </Form.Label>
-                  <Form.Control type="text" placeholder="Negara" />
-                </Form.Group>
-              </Col>
-            </Row>
-            <br></br>
+            <br />
             <Row>
               <Col md={6}>
-                <Form.Group controlId="formProvinsi">
+                <Form.Group controlId="formPassword">
                   <Form.Label>
-                    Provinsi <span className="required-asterisk">*</span>
+                    Password <span className="required-asterisk">*</span>
                   </Form.Label>
-                  <Form.Control type="text" placeholder="Provinsi" />
+                  <div className="password-input-container">
+                    <Form.Control
+                      type={showPassword ? 'text' : 'password'}
+                      placeholder="Password"
+                      name="password"
+                      value={formData.password}
+                      onChange={handleChange}
+                      required
+                    />
+                    <FontAwesomeIcon
+                      icon={showPassword ? faEyeSlash : faEye}
+                      onClick={togglePasswordVisibility}
+                      className="password-toggle-icon"
+                    />
+                  </div>
                 </Form.Group>
               </Col>
-              <br></br>
+              <br />
               <Col md={6}>
-                <Form.Group controlId="formKota">
+                <Form.Group controlId="formProvince">
                   <Form.Label>
-                    Kota <span className="required-asterisk">*</span>
+                    Confirm Password <span className="required-asterisk">*</span>
                   </Form.Label>
-                  <Form.Control type="text" placeholder="Kota" />
+                  <Form.Control
+                    type="password"
+                    placeholder="Confirm Password"
+                    name="confirm_pw"
+                    onChange={handleChange}
+                    required
+                  />
                 </Form.Group>
               </Col>
-              <br></br>
+              <br />
             </Row>
-            <br></br>
-            <Row>
-              <Col md={12}>
-                <Form.Group controlId="formNamaKontakDarurat">
-                  <Form.Label>
-                    Nama Kontak Darurat <span className="required-asterisk">*</span>
-                  </Form.Label>
-                  <Form.Control type="text" placeholder="Nama Kontak Darurat" />
-                </Form.Group>
-              </Col>
-            </Row>
-            <br></br>
-            <Row>
-              <Col md={6}>
-                <Form.Group controlId="formTeleponDarurat">
-                  <Form.Label>
-                    Telepon Darurat <span className="required-asterisk">*</span>
-                  </Form.Label>
-                  <Form.Control type="text" placeholder="Telepon Darurat" />
-                </Form.Group>
-              </Col>
-            </Row>
-            <br></br>
-            <h3>Pendidikan Terakhir</h3>
-            <br></br>
-            <Row>
-              <Col md={12}>
-                <Form.Group controlId="formJenjangPendidikan">
-                  <Form.Label>
-                    Jenjang Pendidikan Terakhir <span className="required-asterisk">*</span>
-                  </Form.Label>
-                  <Form.Control type="text" placeholder="Jenjang Pendidikan Terakhir" />
-                </Form.Group>
-              </Col>
-            </Row>
-            <br></br>
+            <br />
+           
+            <br />
+           
+            <h3>Education</h3>
+            <br />
             <Row>
               <Col md={6}>
-                <Form.Group controlId="formNamaInstitusi">
+                <Form.Group controlId="formEducationLevel">
                   <Form.Label>
-                    Nama Institusi Pendidikan <span className="required-asterisk">*</span>
+                    Education Level <span className="required-asterisk">*</span>
                   </Form.Label>
-                  <Form.Control type="text" placeholder="Nama Institusi Pendidikan" />
+                  <Form.Control
+                    type="text"
+                    placeholder="Education Level"
+                    name="education_level"
+                    value={formData.education_level}
+                    onChange={handleChange}
+                    required
+                  />
                 </Form.Group>
               </Col>
+              <br />
+              <Col md={6}>
+                <Form.Group controlId="formInstitutionName">
+                  <Form.Label>
+                    Institution Name <span className="required-asterisk">*</span>
+                  </Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="Institution Name"
+                    name="instituition_name"
+                    value={formData.instituition_name}
+                    onChange={handleChange}
+                    required
+                  />
+                </Form.Group>
+              </Col>
+              <br />
             </Row>
-            <br></br>
+            <br />
             <Row>
               <Col md={12}>
-                <Form.Group controlId="formProgramStudi">
+                <Form.Group controlId="formStudyProgram">
                   <Form.Label>
-                    Program Studi <span className="required-asterisk">*</span>
+                    Study Program <span className="required-asterisk">*</span>
                   </Form.Label>
-                  <Form.Control type="text" placeholder="Program Studi" />
+                  <Form.Control
+                    type="text"
+                    placeholder="Study Program"
+                    name="study_program"
+                    value={formData.study_program}
+                    onChange={handleChange}
+                    required
+                  />
                 </Form.Group>
               </Col>
+              <br />
             </Row>
-            <br></br>
-            <Link to="/admin/employee-staff">
-              <Button variant="primary" className="submit-btn">
-                Selanjutnya
-              </Button>
-            </Link>
+            <br />
+            <Button variant="primary" className="submit-btn" type="submit">
+              Next
+            </Button>
           </Form>
         </div>
       </div>

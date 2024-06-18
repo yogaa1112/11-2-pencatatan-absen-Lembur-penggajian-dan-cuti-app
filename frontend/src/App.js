@@ -12,7 +12,6 @@ import ForgotPassword from "./Components/ForgotPassword";
 import Employees from "./Components/Employees";
 import EmployeePersonal from "./Components/EmployeePersonal";
 import EmployeeStaff from "./Components/EmployeeStaff";
-import EmployeePayroll from "./Components/EmployeePayroll";
 import AddSalary from "./Components/AddSalary";
 import Salary from "./Components/Salary"
 import Attendance from "./Components/Attendance";
@@ -53,7 +52,6 @@ function App() {
             <Route path="employees" element={<Employees />} />
             <Route path="add-employee" element={<EmployeePersonal />} />
             <Route path="employee-staff" element={<EmployeeStaff />} />
-            <Route path="employee-payroll" element={<EmployeePayroll />} />
             <Route path="attendance" element={<Attendance />} />
             <Route path="salary" element={<Salary />} />
             <Route path="add-salary" element={<AddSalary />} />

@@ -23,6 +23,10 @@ module.exports = {
             const payload = {
                 user: {
                     admin_id: admin.admin_id,
+                    name: admin.name,
+                    photo: admin.photo_url,
+                    position: admin.position,
+                    role: 'admin'
                 },
             }
 
@@ -53,9 +57,9 @@ module.exports = {
             if (!verif) {
                 return res.json({ message: 'Invalid token' });
             }
-            return res.json({ message: 'Valid token' });
+            return res.json({ message: 'Valid token', user: verif.user });
         } catch (err) {
             return res.json({ message: 'Invalid token', error: err });
         }
-    }
+    },
 }
