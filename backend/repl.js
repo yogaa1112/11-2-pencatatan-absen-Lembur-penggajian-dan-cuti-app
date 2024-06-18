@@ -1,9 +1,10 @@
 const db = require("./services/db")
 
 async function repl() {
-    console.log(
-        await db('admins').select()
-    )
+    
+    let azz = await db('employee_personal').select()
+    console.log(azz.length)
+    
 }
 
 repl()
