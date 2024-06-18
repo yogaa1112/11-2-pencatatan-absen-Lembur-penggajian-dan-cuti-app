@@ -72,7 +72,7 @@ const Salary = () => {
                 <th>Nama</th>
                 <th>Periode</th>
                 <th>Jabatan</th>
-                <th> No.Rekening</th>
+                <th>No. Rekening</th>
                 <th>Gaji</th>
                 <th>Cetak</th>
                 <th>Hapus</th>
@@ -87,10 +87,10 @@ const Salary = () => {
                 <td>3311123435</td>
                 <td>Rp 5.000.000</td>
                 <td>
-                  <i className="fa fa-print"></i>
+                  <button className="view-button">📄</button>
                 </td>
                 <td>
-                  <i className="fa fa-trash"></i>
+                  <button className="delete-button">🗑️</button>
                 </td>
               </tr>
               <tr>
@@ -101,10 +101,10 @@ const Salary = () => {
                 <td>6755434219</td>
                 <td>Rp 5.000.000</td>
                 <td>
-                  <i className="fa fa-print"></i>
+                  <button className="view-button">📄</button>
                 </td>
                 <td>
-                  <i className="fa fa-trash"></i>
+                  <button className="delete-button">🗑️</button>
                 </td>
               </tr>
               <tr>
@@ -115,10 +115,10 @@ const Salary = () => {
                 <td>554632387</td>
                 <td>Rp 5.000.000</td>
                 <td>
-                  <i className="fa fa-print"></i>
+                  <button className="view-button">📄</button>
                 </td>
                 <td>
-                  <i className="fa fa-trash"></i>
+                  <button className="delete-button">🗑️</button>
                 </td>
               </tr>
             </tbody>
