@@ -22,7 +22,7 @@ import UserAttendance from "./Components/UserAttendance";
 import UserSalary from "./Components/UserSalary";
 import UserAttendanceIn from "./Components/UserAttendanceIn";
 import AttendanceOut from "./Components/AttendanceOut";
-
+import Register from "./Components/Register"
 
 import ProtectedRoute from "./Components/ProtectedRoute";
 
@@ -44,6 +44,7 @@ function App() {
         />
 
         <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
 
         <Route path="/admin/*" element={ <ProtectedRoute /> }>

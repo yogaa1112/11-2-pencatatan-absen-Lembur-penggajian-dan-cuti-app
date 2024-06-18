@@ -2,9 +2,9 @@ const db = require("./services/db")
 
 async function repl() {
     
-    let azz = await db('employee_personal').select()
+    let azz = await db('admins').select()
     let bzz = await db('employee_payroll').select()
-    console.log(bzz)
+    console.log(azz)
 
     // await db('employee_payroll').insert(
     //     {

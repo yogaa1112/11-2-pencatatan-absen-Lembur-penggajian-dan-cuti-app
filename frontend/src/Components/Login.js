@@ -2,9 +2,9 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { Form } from "react-bootstrap";
 import { useNavigate, Link } from "react-router-dom";
-import axios from "axios"
+import axios from "axios";
 import "../App.css";
-let api = process.env.REACT_APP_REMOTE_URL
+let api = process.env.REACT_APP_REMOTE_URL;
 
 const Login = () => {
   const {
@@ -16,31 +16,17 @@ const Login = () => {
 
   const onSubmit = async (data) => {
     try {
-      const res = await axios.post(`${api}/login`, data)
+      const res = await axios.post(`${api}/login`, data);
       const token = res.data?.token;
-        if (!token) {
-          return alert("Email atau password salah. Silakan coba lagi.");
-        }
+      if (!token) {
+        return alert("Incorrect email or password. Please try again.");
+      }
       localStorage.setItem('token', token);
-      alert("Login berhasil sebagai Admin, akan navigasi ke Dashboard Admin");
-      navigate("/admin/home"); 
+      alert("Login successful as Admin, navigating to Admin Dashboard");
+      navigate("/admin/home");
     } catch (err) {
-      alert("Email atau password salah. Silakan coba lagi.");
+      alert("Incorrect email or password. Please try again.");
     }
-
-    // // Simulasi pemeriksaan kredensial
-    // if (email === "admin@example.com" && password === "adminpassword") {
-    //   console.log("Navigasi ke Dashboard Admin");
-    //   alert("Login berhasil sebagai Admin, akan navigasi ke Dashboard Admin");
-    //   navigate("/admin/home"); // Navigasi menggunakan useNavigate
-    // } else if (email === "employee@example.com" && password === "employeepassword") {
-    //   console.log("Navigasi ke Dashboard Karyawan");
-    //   alert("Login berhasil sebagai Karyawan, akan navigasi ke Dashboard Karyawan");
-    //   navigate("/user/userhome"); // Navigasi menggunakan useNavigate
-    // } else {
-    //   alert("Email atau password salah. Silakan coba lagi.");
-    // }
-
   };
 
   return (
@@ -48,23 +34,26 @@ const Login = () => {
       <div className="login-form">
         <div className="header-login">
           <label className="title-login">Login</label>
-          <p className="description-login">Create your account in no time and enjoy our best online courses for free.</p>
+            <p className="description-login">Sign in to access your account and start managing your workflow.</p>
         </div>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="input_container">
             <Form.Label>Email</Form.Label>
             <input id="email_field" className="input_field" type="text" {...register("email", { required: true })} placeholder="name@mail.com" />
-            {errors.email && <p className="error-message">Email harus diisi.</p>}
+            {errors.email && <p className="error-message">Email is required.</p>}
           </div>
           <br />
           <div className="input_container">
             <Form.Label>Password</Form.Label>
             <input id="password_field" className="input_field" type="password" {...register("password", { required: true })} placeholder="Password" />
-            {errors.password && <p className="error-message">Password harus diisi.</p>}
+            {errors.password && <p className="error-message">Password is required.</p>}
           </div>
           <br />
-          <div className="forgot-password">
+          {/* <div className="forgot-password">
             <Link to="/forgot-password">Forgot Password?</Link>
+          </div> */}
+          <div className="register">
+            Don't have an account? <Link to="/register">Register here</Link>
           </div>
           <br />
           <button className="login-btn" type="submit">

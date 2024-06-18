@@ -12,35 +12,37 @@ const HomeDashboard = () => {
     karyawanKeluar: 0,
   });
 
-  useEffect(() => {
-    fetchStats();
-  }, []);
+  // useEffect(() => {
+  //   fetchStats();
+  // }, []);
 
-  const fetchStats = async () => {
-    try {
-      const response = await fetch("URL_API_ANDA");
-      const data = await response.json();
-      setStats({
-        karyawanAktif: data.karyawanAktif,
-        karyawanCuti: data.karyawanCuti,
-        karyawanKeluar: data.karyawanKeluar,
-      });
-    } catch (error) {
-      console.error("Error fetching stats:", error);
-    }
-  };
+  // const fetchStats = async () => {
+  //   try {
+  //     const response = await fetch("URL_API_ANDA");
+  //     const data = await response.json();
+  //     setStats({
+  //       karyawanAktif: data.karyawanAktif,
+  //       karyawanCuti: data.karyawanCuti,
+  //       karyawanKeluar: data.karyawanKeluar,
+  //     });
+  //   } catch (error) {
+  //     console.error("Error fetching stats:", error);
+  //   }
+  // };
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
+  // if (loading) {
+  //   return <div>Loading...</div>;
+  // }
 
-  if (error) {
-    return <div>Error: {error.message}</div>;
-  }
+  // if (error) {
+  //   return <div>Error: {error.message}</div>;
+  // }
 
   if (!user) {
     return <div>No user data</div>;
   }
+
+  console.log(user)
 
   return (
     <div>
