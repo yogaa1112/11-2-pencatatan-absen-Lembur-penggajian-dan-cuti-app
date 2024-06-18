@@ -80,17 +80,6 @@ const EmployeePayroll = () => {
             </Row>
             <br></br>
             <Row>
-              <Col md={16}>
-                <Form.Group controlId="formCabang">
-                  <Form.Label>
-                    Cabang <span className="required-asterisk">*</span>
-                  </Form.Label>
-                  <Form.Control type="text" placeholder="Cabang" />
-                </Form.Group>
-              </Col>
-            </Row>
-            <br></br>
-            <Row>
               <Col md={12}>
                 <Form.Group controlId="formNamaPemilik">
                   <Form.Label>

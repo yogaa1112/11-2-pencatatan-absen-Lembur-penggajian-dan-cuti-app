@@ -46,25 +46,15 @@ const EmployeeStaff = () => {
               </Col>
               <br></br>
               <Col md={6}>
-                <Form.Group controlId="formPangkat">
-                  <Form.Label>
-                    Pangkat <span className="required-asterisk">*</span>
-                  </Form.Label>
-                  <Form.Control type="text" placeholder="Pangkat" />
-                </Form.Group>
-              </Col>
-            </Row>
-            <br></br>
-            <Row>
-              <Col md={6}>
                 <Form.Group controlId="formPenempatanKerja">
                   <Form.Label>
-                    Penempatan Kerja <span className="required-asterisk">*</span>
+                  Penempatan Kerja <span className="required-asterisk">*</span>
                   </Form.Label>
                   <Form.Control type="text" placeholder="Penempatan Kerja" />
                 </Form.Group>
               </Col>
             </Row>
+            
             <br></br>
             <Link to="/admin/employee-payroll">
               <Button variant="primary" className="submit-btn">

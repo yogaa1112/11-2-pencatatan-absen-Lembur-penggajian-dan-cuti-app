@@ -60,9 +60,9 @@ const EmployeePersonal = () => {
               <Col md={6}>
                 <Form.Group controlId="formPendidikan">
                   <Form.Label>
-                    Pendidikan <span className="required-asterisk">*</span>
+                    Golongan Darah <span className="required-asterisk">*</span>
                   </Form.Label>
-                  <Form.Control type="text" placeholder="Pendidikan" />
+                  <Form.Control type="text" placeholder="Indonesia" />
                 </Form.Group>
               </Col>
               <br></br>
@@ -89,26 +89,7 @@ const EmployeePersonal = () => {
               <br></br>
             </Row>
             <br></br>
-            <Row>
-              <Col md={6}>
-                <Form.Group controlId="formGolonganDarah">
-                  <Form.Label>
-                    Golongan Darah <span className="required-asterisk">*</span>
-                  </Form.Label>
-                  <Form.Control type="text" placeholder="Golongan Darah" />
-                </Form.Group>
-              </Col>
-              <br></br>
-              <Col md={6}>
-                <Form.Group controlId="formKewarganegaraan">
-                  <Form.Label>
-                    Kewarganegaraan <span className="required-asterisk">*</span>
-                  </Form.Label>
-                  <Form.Control type="text" placeholder="Kewarganegaraan" />
-                </Form.Group>
-              </Col>
-              <br></br>
-            </Row>
+
             <br></br>
             <h3>Informasi Kontak</h3>
             <br></br>
@@ -125,7 +106,7 @@ const EmployeePersonal = () => {
               <Col md={6}>
                 <Form.Group controlId="formNoTelp">
                   <Form.Label>
-                    No TLP/HP <span className="required-asterisk">*</span>
+                    No Whatsapp <span className="required-asterisk">*</span>
                   </Form.Label>
                   <Form.Control type="text" placeholder="No TLP/HP" />
                 </Form.Group>
