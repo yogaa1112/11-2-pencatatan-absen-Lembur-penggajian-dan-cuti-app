@@ -1,9 +1,7 @@
 import React from 'react';
 import '../App.css';
-import { Table, Button } from 'react-bootstrap';
-import { FaTrash } from 'react-icons/fa';
+import { Table } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-
 
 const Employees = () => {
   const employeesList = [
@@ -41,8 +39,8 @@ const Employees = () => {
       <div className="header-container">
         <h2>Karyawan</h2>
         <Link to="/admin/add-employee">
-        <button className="add-employee">+ Karyawan</button>
-      </Link>
+          <button className="add-employee">+ Karyawan</button>
+        </Link>
       </div>
       <div className="employees-container">
         <Table striped bordered hover>
@@ -69,9 +67,7 @@ const Employees = () => {
                 <td>{employee.religion}</td>
                 <td>{employee.education}</td>
                 <td>
-                  <Button variant="link" className="delete-btn">
-                    <FaTrash color="red" />
-                  </Button>
+                  <button className="delete-button">🗑️</button>
                 </td>
               </tr>
             ))}
