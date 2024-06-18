@@ -18,5 +18,25 @@ module.exports = {
       } catch (e) {
         return res.json({ message: 'error' });
       }
+    },
+
+    employeeList: async (req, res) => {
+      try {
+        const employees = await db('employee_personal')
+          .join('employee_payroll', 'employee_personal.employee_id', '=', 'employee_payroll.employee_id')
+          .select(
+            'employee_personal.full_name',
+            'employee_payroll.position',
+            'employee_personal.wa_phone',
+            'employee_payroll.status',
+            'employee_personal.gender',
+            'employee_payroll.salary_amount',
+            'employee_payroll.salary_date',
+          );
+        return res.json(employees);
+      } catch (e) {
+        return res.json({ message: 'error' });
+      }
     }
+    
 }

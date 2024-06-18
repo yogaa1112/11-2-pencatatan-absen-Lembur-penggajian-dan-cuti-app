@@ -5,5 +5,6 @@ const router = express.Router();
 
 router.post("/add/personal", employeeController.addEmployeePersonal);
 router.post("/add/payroll", employeeController.addEmployeePayroll);
+router.get("/list", employeeController.employeeList);
 
 module.exports = router;

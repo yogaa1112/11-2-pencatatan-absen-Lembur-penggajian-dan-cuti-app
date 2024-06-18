@@ -8,7 +8,6 @@ exports.up = async function(knex) {
         table.bigInteger('employee_id').unsigned().references('employee_id').inTable('employee_personal').onDelete('CASCADE').onUpdate('CASCADE')
         table.string('status')
         table.string('position')
-        table.string('location')
         table.string('join_date')
         table.string('work_placement')
         table.string('bank_name')

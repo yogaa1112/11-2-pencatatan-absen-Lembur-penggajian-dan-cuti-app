@@ -1,77 +1,78 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../App.css";
 import { Table } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import axios from "axios"
 
 const Employees = () => {
-  const [employeesList, setEmployeesList] = useState([
-    {
-      no: 1,
-      name: "M Ichsan Dedi",
-      sex: "Laki-laki",
-      id: "KTP",
-      nik: "12345678",
-      religion: "Islam",
-      education: "S1",
-    },
-    {
-      no: 2,
-      name: "M Ahya Fajri F",
-      sex: "Laki-laki",
-      id: "KTP",
-      nik: "12345678",
-      religion: "Islam",
-      education: "S2",
-    },
-    {
-      no: 3,
-      name: "M Ahya Fajri F",
-      sex: "Laki-laki",
-      id: "KTP",
-      nik: "12345678",
-      religion: "Islam",
-      education: "S2",
-    },
-  ]);
+  const [employeesList, setEmployeesList] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchEmployees = async () => {
+      try {
+        axios.get(`${process.env.REACT_APP_REMOTE_URL}/employee/list`).then((resp) => {
+          setEmployeesList(resp.data);
+        })
+      } catch (error) {
+        setError(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchEmployees();
+  }, []);
 
   const handleDelete = (index) => {
     const updatedList = employeesList.filter((_, i) => i !== index);
     setEmployeesList(updatedList);
   };
 
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  }
+
   return (
     <div className="main-content">
       <div className="header-container">
-        <h2>Karyawan</h2>
+        <h2>Employees</h2>
         <Link to="/admin/add-employee">
-          <button className="add-employee">+ Karyawan</button>
+          <button className="add-employee">+ Add Employee</button>
         </Link>
       </div>
       <div className="employees-container">
         <Table striped bordered hover>
           <thead>
             <tr>
-              <th>No</th>
-              <th>Nama</th>
-              <th>Jenis Kelamin</th>
-              <th>Identitas</th>
-              <th>NIK</th>
-              <th>Agama</th>
-              <th>Pendidikan</th>
-              <th>Hapus</th>
+              <th className="text-center">No</th>
+              <th className="text-center">Name</th>
+              <th className="text-center">Position</th>
+              <th className="text-center">WhatsApp Number</th>
+              <th className="text-center">Status</th>
+              <th className="text-center">Gender</th>
+              <th className="text-center">Salary Amount</th>
+              <th className="text-center">Salary Date</th>
+              <th className="text-center">Action</th>
             </tr>
           </thead>
           <tbody>
             {employeesList.map((employee, index) => (
               <tr key={index}>
-                <td>{employee.no}</td>
-                <td>{employee.name}</td>
-                <td>{employee.sex}</td>
-                <td>{employee.id}</td>
-                <td>{employee.nik}</td>
-                <td>{employee.religion}</td>
-                <td>{employee.education}</td>
-                <td>
+                <td className="text-center">{index + 1}</td>
+                <td className="text-center">{employee.full_name}</td>
+                <td className="text-center">{employee.position}</td>
+                <td className="text-center">{employee.wa_phone}</td>
+                <td className="text-center">{employee.status}</td>
+                <td className="text-center">{employee.gender}</td>
+                <td className="text-center">{employee.salary_amount}</td>
+                <td className="text-center">{employee.salary_date}</td>
+                <td className="text-center">
                   <button className="delete-button" onClick={() => handleDelete(index)}>
                     🗑️
                   </button>

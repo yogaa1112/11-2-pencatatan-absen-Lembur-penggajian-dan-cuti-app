@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
-
 import "../App.css";
 import HeaderAdmin from "./HeaderAdmin";
+import useCurrentUser from "./Services/useCurrentUser";
 
 const HomeDashboard = () => {
+  const { user, loading, error } = useCurrentUser();
+
   const [stats, setStats] = useState({
     karyawanAktif: 0,
     karyawanCuti: 0,
@@ -28,6 +30,18 @@ const HomeDashboard = () => {
     }
   };
 
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  }
+
+  if (!user) {
+    return <div>No user data</div>;
+  }
+
   return (
     <div>
       <HeaderAdmin />
@@ -35,7 +49,7 @@ const HomeDashboard = () => {
         <main className="main-content-admin">
           <header className="header-admin-info">
             <div className="user-info">
-              <h1>Hallo, Admin</h1>
+              <h1>Halo, {user.name || "User"}</h1>
               <p>Saya merupakan admin yang akan mengelola data karyawan</p>
               <p>PT. Workflow</p>
             </div>
