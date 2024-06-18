@@ -13,7 +13,6 @@ exports.seed = async function(knex) {
       employee_id: 1,
       status: 'Permanent',
       position: 'Backend Developer',
-      location: null,
       join_date: '2024-06-05',
       work_placement: 'Malang',
       bank_name: 'Mandiri',

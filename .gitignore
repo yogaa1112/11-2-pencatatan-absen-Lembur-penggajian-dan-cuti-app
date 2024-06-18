@@ -1,4 +1,5 @@
 backend/node_modules
 backend/.env
 backend/databases/dev.sqlite3
+backend/public/images
 frontend/.env

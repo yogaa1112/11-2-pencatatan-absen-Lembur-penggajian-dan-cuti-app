@@ -62,4 +62,46 @@ module.exports = {
             return res.json({ message: 'Invalid token', error: err });
         }
     },
+
+    loginProcEmployee: async (req, res) => {
+        const { email, password } = req.body;
+        
+        try {
+            const employee = await db('employee_personal').where({ email }).first();
+
+            if (!employee) {
+                return res.json({ message: 'Invalid credentials' });
+            }
+
+            const isMatch = await bcrypt.compare(password, employee.password);
+
+            if (!isMatch) {
+                return res.json({ message: 'Invalid credentials' });
+            }
+
+            //join employee personal and employee payroll
+            const employee_full = await db('employee_personal').where({ email }).join('employee_payroll', 'employee_personal.employee_id', 'employee_payroll.employee_id').select('employee_personal.*', 'employee_payroll.*').first()
+
+            const payload = {
+                user: {
+                    employee: employee_full,
+                    role: 'employee'
+                },
+            }
+
+            jwt.sign(
+                payload,
+                'prjsecret11x', 
+                { expiresIn: '12h' },
+                (err, token) => {
+                if (err) throw err;
+                 res.json({ token });
+                }
+            );
+        } catch (err) {
+            console.error(err.message);
+            res.status(500).send('Server error');
+        }
+
+      },
 }

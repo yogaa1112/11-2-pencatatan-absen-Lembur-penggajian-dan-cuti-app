@@ -1,18 +1,19 @@
-import axios from 'axios'
-const token = localStorage.getItem('token')
+import axios from 'axios';
 
 export const getCurrentUser = async () => {
+    const token = localStorage.getItem('token');
+
+    if (!token) {
+        console.error('No token found');
+        return null;
+    }
+
     try {
-        
-        if (!token) {
-            throw new Error('No token found');
-        }
-
-        const response = await axios.post(`${process.env.REACT_APP_REMOTE_URL}/login/validate`, 
-        { token });
-
+        const response = await axios.post(`${process.env.REACT_APP_REMOTE_URL}/login/validate`, { token });
+        console.log('User data:', response.data);
         return response.data;
     } catch (err) {
-        throw new Error(err.response?.data?.message || 'Failed to fetch user');
+        console.error('Error fetching user:', err.response?.data?.message || 'Failed to fetch user');
+        return null;
     }
 };

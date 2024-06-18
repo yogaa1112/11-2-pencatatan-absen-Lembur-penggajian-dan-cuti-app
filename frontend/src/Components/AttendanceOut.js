@@ -1,7 +1,10 @@
 import React, { useRef, useCallback, useState, useEffect } from "react";
 import Webcam from "react-webcam";
 import { Button, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 import "../App.css";
+import axios from 'axios'
+import { getCurrentUser } from "./Services/getCurrentUser";
 
 const videoConstraints = {
   width: 620,
@@ -9,10 +12,16 @@ const videoConstraints = {
   facingMode: "user",
 };
 
-const AttendanceOut = () => {
+const AttendanceIn = () => {
+  const navigate = useNavigate();
+
   const webcamRef = useRef(null);
   const [currentTime, setCurrentTime] = useState(new Date());
   const [capturedData, setCapturedData] = useState(null);
+
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -21,35 +30,60 @@ const AttendanceOut = () => {
     return () => clearInterval(timer);
   }, []);
 
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const userData = await getCurrentUser();
+        setUser(userData.user);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUser();
+  }, []);
+
   const capture = useCallback(() => {
     const image = webcamRef.current.getScreenshot();
     const timestamp = new Date();
     const payload = {
+      user: user, // Include user data here
       image,
       timestamp: timestamp.toISOString(),
     };
     setCapturedData(payload);
     sendToBackend(payload);
-  }, [webcamRef]);
+  }, [webcamRef, user]); // Add user to the dependency array
 
   const sendToBackend = async (payload) => {
     try {
-      const response = await fetch("http://your-backend-endpoint/api/attendance", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payload),
+      console.log(user); // This should now log the correct user data
+      const response = await axios.post(`${process.env.REACT_APP_REMOTE_URL}/employee/attendance/out`, payload).then(res => {
+        if (res.data.message == 'success') {
+          alert("Attendance successfully recorded");
+          navigate("/user/userattendance");
+        } else {
+          alert("Attendance failed to be recorded, Server is down");
+        }
       });
-      if (response.ok) {
-        console.log("Data sent successfully!");
-      } else {
-        console.error("Error sending data");
-      }
     } catch (error) {
       console.error("Error:", error);
     }
   };
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
+
+  if (!user || !user.employee) {
+    return <div>No user data available</div>;
+  }
 
   return (
     <div className="main-content">
@@ -92,4 +126,4 @@ const AttendanceOut = () => {
   );
 };
 
-export default AttendanceOut;
+export default AttendanceIn;
