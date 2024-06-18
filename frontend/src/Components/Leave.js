@@ -1,12 +1,17 @@
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import React from "react";
+
 
 const Leave = () => {
-  const data = [
+  const [data, setData] = useState([
     { id: 1, name: 'M Ahya Fajri F', position: 'Karyawan', startDate: '', endDate: '', notes: '' },
     { id: 2, name: 'M Ahya Fajri F', position: 'Karyawan', startDate: '', endDate: '', notes: '' },
     { id: 3, name: 'M Ahya Fajri F', position: 'Karyawan', startDate: '', endDate: '', notes: '' },
-  ];
+  ]);
+
+  const handleDelete = (id) => {
+    setData(data.filter(item => item.id !== id));
+  };
 
   return (
     <div className="main-content-admin">
@@ -44,7 +49,7 @@ const Leave = () => {
               <td>{item.endDate}</td>
               <td>{item.notes}</td>
               <td>
-                <button className="delete-btn">🗑️</button>
+              <button className="delete-button" onClick={() => handleDelete(item.id)}>🗑️</button>
               </td>
             </tr>
           ))}
