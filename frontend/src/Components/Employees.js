@@ -1,38 +1,43 @@
-import React from 'react';
-import '../App.css';
-import { Table } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import React, { useState } from "react";
+import "../App.css";
+import { Table } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 const Employees = () => {
-  const employeesList = [
+  const [employeesList, setEmployeesList] = useState([
     {
       no: 1,
-      name: 'M Ichsan Dedi',
-      sex: 'Laki-laki',
-      id: 'KTP',
-      nik: '12345678',
-      religion: 'Islam',
-      education: 'S1'
+      name: "M Ichsan Dedi",
+      sex: "Laki-laki",
+      id: "KTP",
+      nik: "12345678",
+      religion: "Islam",
+      education: "S1",
     },
     {
       no: 2,
-      name: 'M Ahya Fajri F',
-      sex: 'Laki-laki',
-      id: 'KTP',
-      nik: '12345678',
-      religion: 'Islam',
-      education: 'S2'
+      name: "M Ahya Fajri F",
+      sex: "Laki-laki",
+      id: "KTP",
+      nik: "12345678",
+      religion: "Islam",
+      education: "S2",
     },
     {
       no: 3,
-      name: 'M Ahya Fajri F',
-      sex: 'Laki-laki',
-      id: 'KTP',
-      nik: '12345678',
-      religion: 'Islam',
-      education: 'S2'
-    }
-  ];
+      name: "M Ahya Fajri F",
+      sex: "Laki-laki",
+      id: "KTP",
+      nik: "12345678",
+      religion: "Islam",
+      education: "S2",
+    },
+  ]);
+
+  const handleDelete = (index) => {
+    const updatedList = employeesList.filter((_, i) => i !== index);
+    setEmployeesList(updatedList);
+  };
 
   return (
     <div className="main-content">
@@ -67,7 +72,9 @@ const Employees = () => {
                 <td>{employee.religion}</td>
                 <td>{employee.education}</td>
                 <td>
-                  <button className="delete-button">🗑️</button>
+                  <button className="delete-button" onClick={() => handleDelete(index)}>
+                    🗑️
+                  </button>
                 </td>
               </tr>
             ))}
